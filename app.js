@@ -61,15 +61,16 @@ store.on("error", ()=>{
    console.log("ERROR in MONGO SESSION STORE",err)
 });
 
-const sessionOptions={
+const sessionOptions = {
   store,
   secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: true,
-  cookie :{
-    expires: Date.now()+7*24*60*60*1000,
-    maxAge: 7*24*60*60*1000,
+  saveUninitialized: false,
+  cookie: {
     httpOnly: true,
+    secure: true,        // REQUIRED for Render (HTTPS)
+    sameSite: "none",    // IMPORTANT for cross-site cookies
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 };
 
