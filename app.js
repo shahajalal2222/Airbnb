@@ -46,9 +46,7 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
-
-
-
+app.set("trust proxy", 1);
  
 const store=MongoStore.create({
   mongoUrl: dbUrl,
@@ -124,4 +122,7 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
   console.log("Server is listening to port 8080");
 });
+
+
+
  
