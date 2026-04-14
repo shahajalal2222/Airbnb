@@ -48,17 +48,13 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 app.set("trust proxy", 1);
  
-const store=MongoStore.create({
+const store = MongoStore.create({
   mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
-  touchAfter: 24*3600,
-
+  touchAfter: 24 * 3600,
 });
 
-store.on("error", ()=>{
-   console.log("ERROR in MONGO SESSION STORE",err)
+store.on("error", (err) => {
+  console.log("SESSION STORE ERROR:", err);
 });
 
 const sessionOptions = {
@@ -68,12 +64,11 @@ const sessionOptions = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: true,        // REQUIRED for Render (HTTPS)
-    sameSite: "none",    // IMPORTANT for cross-site cookies
+    secure: false,     // localhost
+    sameSite: "lax",   // localhost
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 };
-
 // app.get("/", (req, res) => {
 //   res.send("Hi I am root");
 // });
