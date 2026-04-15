@@ -46,4 +46,3 @@ module.exports.login=async (req, res, next) => {
     res.redirect("/listings");
   });
 };
-

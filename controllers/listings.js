@@ -35,14 +35,18 @@ module.exports.createListing = async (req, res, next) => {
   // 🔥 Geocoding part start
   const location = req.body.listing.location;
 
-  const geoRes = await axios.get(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${location}`,
-    {
-      headers: {
-        "User-Agent": "my-mern-app", // anything meaningful
-      },
+const geoRes = await axios.get(
+  `https://nominatim.openstreetmap.org/search`,
+  {
+    params: {
+      format: "json",
+      q: location,
     },
-  );
+    headers: {
+      "User-Agent": "wanderlust-app (your@email.com)", // MUST be meaningful
+    },
+  }
+);
 
     const lat = geoRes.data[0].lat;
     const lon = geoRes.data[0].lon;
